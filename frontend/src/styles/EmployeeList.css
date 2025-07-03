@@ -1,0 +1,46 @@
+.container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.employee-table th,
+.employee-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.add-btn {
+  background-color: #2e89ff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.edit-btn,
+.delete-btn {
+  margin-right: 8px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.edit-btn {
+  background-color: #2e89ff;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #2e89ff;
+  color: white;
+}

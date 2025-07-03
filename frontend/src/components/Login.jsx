@@ -17,11 +17,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("📤 Sending login data:", formData);
-
     try {
       const res = await axios.post("http://localhost:5000/api/auth/login", formData);
-      console.log("📥 Response from server:", res.data);
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -29,7 +26,6 @@ const Login = () => {
 
       navigate("/");
     } catch (err) {
-      console.error("❌ Login failed:", err.response?.data || err.message);
       setError(err.response?.data?.message || "Login failed");
     }
   };

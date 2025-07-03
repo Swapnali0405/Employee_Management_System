@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const AddEmployee = () => {
+  const { user } = useContext(AuthContext);
   const [form, setForm] = useState({
     name: "",
-    email: "",
     position: "",
     department: "",
     salary: ""
@@ -15,30 +16,58 @@ const AddEmployee = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
-
     try {
-      await axios.post("http://localhost:5000/api/employees/add", form, {
+      const token = localStorage.getItem("token");
+      await axios.post("http://localhost:5000/api/employees", form, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       navigate("/employees");
     } catch (err) {
-      console.error("Error adding employee:", err);
-      alert("Error adding employee");
+      console.error("Failed to add employee:", err);
     }
   };
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  if (!user) return navigate("/login");
 
   return (
     <div className="container">
       <h3>Add New Employee</h3>
       <form onSubmit={handleSubmit}>
-        <input placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-        <input placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-        <input placeholder="Position" value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })} />
-        <input placeholder="Department" value={form.department} onChange={(e) => setForm({ ...form, department: e.target.value })} />
-        <input type="number" placeholder="Salary" value={form.salary} onChange={(e) => setForm({ ...form, salary: e.target.value })} />
+        <input
+          name="name"
+          placeholder="Name"
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="position"
+          placeholder="Position"
+          value={form.position}
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="department"
+          placeholder="Department"
+          value={form.department}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="number"
+          name="salary"
+          placeholder="Salary"
+          value={form.salary}
+          onChange={handleChange}
+          required
+        />
         <button type="submit">Add Employee</button>
       </form>
     </div>
